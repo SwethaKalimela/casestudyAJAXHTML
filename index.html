@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Json,AJAX Case Study</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      function createProtfolio(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET','myresume.json',true);
+        xhttp.onload = function(){
+            var data = JSON.parse(this.responseText);
+            var resume = {}; //defining the resume to later store the first record of myresume json file
+            for (d of data)
+            if (true){
+                resume = d; //assigning the first record of json file to resume
+                break;
+            }
+        document.getElementById("fname").innerHTML = d.fname; //1
+        document.getElementById("lname").innerHTML = d.lname; //2
+        document.getElementById("designation").innerHTML = d.designation; //3
+        document.getElementById("job-description").innerHTML = d.jobdescription; //4
+        var ul = document.getElementById("personality"); //to render the json array personalityhighlights to un-ordered list
+        var items = ul.getElementsByTagName("li");
+        var j=0, k=0;
+        for (var i = 0; i < items.length; ++i) {
+        items[i].innerHTML = d.personalityhighlights[j++];
+        }
+        var cn = document.getElementById("contact"); //to read the child tags of parent tag id: contact
+        for (var i = 0; i < cn.children.length; ++i) {
+            cn.children[i].textContent = d.contact[k++];
+        }
+        document.getElementById("basic2").innerHTML = d.basicInfo;
+        document.getElementById("education2").innerHTML = d.education[0]+"<br>"+"<br>"+d.education[1];
+        document.getElementById("exp").innerHTML = d.experiance[0]+"<br>"+"<br>"+d.experiance[1]+"<br>"+"<br>"+d.experiance[2];
+        }
+        xhttp.send();
+    }    
+    </script>
+</head>
+<body>
+    <h1>Protfolio Website</h1>
+    <button type="button" onclick="createProtfolio()">Create My Protfolio</button> <hr>
+    <div id="container">            <!--1. The Main Container-->
+        <div id="left-container">   <!--1.1 Left container, subcontainer in main container-->
+            <div id="leftcontainer-top"> <!--1.1.1 Left container's top section occupying 50% of it-->
+                <div class="div1" id="currentinfo">
+                    <h2 id="fname">[Your</h2>
+                    <h2 id="lname">Name]</h2>
+                    <h5 id="designation">[Current Designation]</h5>
+                    <h6 id="job-description">[Current Job Description]
+                    </h6>
+                </div>
+                <div class="div2">
+                </div>
+            </div>
+            <div id="leftcontainer-bottom"> <!--1.1.2 Left container's bottom section occupying another 50% of it-->
+                <div id="div21">
+                    <h5 id="head1">PERSONALITY HIGHLIGHTS</h5>
+                </div>
+                <ul id="personality">
+                    <li id="li1"></li>
+                    <li id="li2"></li>
+                    <li id="li3"></li>
+                    <li id="li4"></li>
+                    <li id="li5"></li>
+                    <li id="li6"></li>
+                </ul>
+                <div id="div22">
+                    <h5 id="head2">CONTACT DETAILS</h5>
+                </div>
+                <div id="contact">
+                    <div id="number" ></div>
+                    <div id="email"></div>
+                    <div id="linkdlnaddress"></div>
+                </div>    
+        </div>               
+        <div id="right-container">  <!--1.2 Right container-->
+            <div id="right1">
+                <h5 id="basic">BASIC<br>INFORMATION</h5><hr>
+                <p id="basic2"></p>
+            </div>
+            <div id="right2">
+                    <h3 id="education">EDUCATION</h3><hr>
+                    <p id="education2"></p>
+            </div>
+            <div id="right3">
+                <h3 id="experiance">PROFESSIONAL EXPERIANCE</h3><hr>
+                <p id="exp"></p>
+            </div>
+        </div>        
+    </div>
+</body>
+</html>
